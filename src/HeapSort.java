@@ -1,60 +1,59 @@
 public class HeapSort {
 
-    public static void main(String args[]) {
-        int array[] = {4, 181, 1, 45, 61, 7, 11, 78};
+    public static void main(String[] args) {
+        int[] array = {4, 181, 1, 45, 61, 7, 11, 78};
 
         sort(array);
 
-        System.out.println("Result:");
+        System.out.println("Result :");
         printArray(array);
     }
 
-    public static void sort(int array[]) {
+    public static void sort(int[] array) {
 
-        // Построение кучи (перегруппируем массив)
+        // РџРѕСЃС‚СЂРѕРµРЅРёРµ РєСѓС‡Рё (РїРµСЂРµРіСЂСѓРїРїРёСЂСѓРµРј РјР°СЃСЃРёРІ)
         for (int i = array.length / 2 - 1; i >= 0; i--)
             heapify(array, array.length, i);
 
-        // Один за другим извлекаем элементы из кучи   
+        // РћРґРёРЅ Р·Р° РґСЂСѓРіРёРј РёР·РІР»РµРєР°РµРј СЌР»РµРјРµРЅС‚С‹ РёР· РєСѓС‡Рё   
         for (int i = array.length - 1; i >= 0; i--) {
-            // Перемещаем текущий корень в конец
+            // РџРµСЂРµРјРµС‰Р°РµРј С‚РµРєСѓС‰РёР№ РєРѕСЂРµРЅСЊ РІ РєРѕРЅРµС†
             int temp = array[0];
             array[0] = array[i];
             array[i] = temp;
 
-            // Вызываем процедуру heapify на уменьшенной куче
+            // Р’С‹Р·С‹РІР°РµРј РїСЂРѕС†РµРґСѓСЂСѓ heapify РЅР° СѓРјРµРЅСЊС€РµРЅРЅРѕР№ РєСѓС‡Рµ
             heapify(array, i, 0);
         }
     }
 
-    // Процедура для преобразования в двоичную кучу поддерева с корневым узлом i, что является
-// индексом в arr[]. n - размер кучи
-    public static void heapify(int array[], int heapSize, int rootIndex) {
-        int largest = rootIndex; // Инициализируем наибольший элемент как корень
-        int leftChild = 2 * rootIndex + 1; // левый = 2*i + 1
-        int rightChild = 2 * rootIndex + 2; // правый = 2*i + 2
+    // РџСЂРѕС†РµРґСѓСЂР° РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РІ РґРІРѕРёС‡РЅСѓСЋ РєСѓС‡Сѓ РїРѕРґРґРµСЂРµРІР° СЃ РєРѕСЂРЅРµРІС‹Рј СѓР·Р»РѕРј i, С‡С‚Рѕ СЏРІР»СЏРµС‚СЃСЏ
+// РёРЅРґРµРєСЃРѕРј РІ arr[]. n - СЂР°Р·РјРµСЂ РєСѓС‡Рё
+    public static void heapify(int[] array, int heapSize, int rootIndex) {
+        int largest = rootIndex; // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РЅР°РёР±РѕР»СЊС€РёР№ СЌР»РµРјРµРЅС‚ РєР°Рє РєРѕСЂРµРЅСЊ
+        int leftChild = 2 * rootIndex + 1; // Р»РµРІС‹Р№ = 2*i + 1
+        int rightChild = 2 * rootIndex + 2; // РїСЂР°РІС‹Р№ = 2*i + 2
 
-        // Если левый дочерний элемент больше корня
+        // Р•СЃР»Рё Р»РµРІС‹Р№ РґРѕС‡РµСЂРЅРёР№ СЌР»РµРјРµРЅС‚ Р±РѕР»СЊС€Рµ РєРѕСЂРЅСЏ
         if (leftChild < heapSize && array[leftChild] > array[largest])
             largest = leftChild;
 
-        // Если правый дочерний элемент больше, чем самый большой элемент на данный момент
+        // Р•СЃР»Рё РїСЂР°РІС‹Р№ РґРѕС‡РµСЂРЅРёР№ СЌР»РµРјРµРЅС‚ Р±РѕР»СЊС€Рµ, С‡РµРј СЃР°РјС‹Р№ Р±РѕР»СЊС€РѕР№ СЌР»РµРјРµРЅС‚ РЅР° РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚
         if (rightChild < heapSize && array[rightChild] > array[largest])
             largest = rightChild;
-        // Если самый большой элемент не корень
+        // Р•СЃР»Рё СЃР°РјС‹Р№ Р±РѕР»СЊС€РѕР№ СЌР»РµРјРµРЅС‚ РЅРµ РєРѕСЂРµРЅСЊ
         if (largest != rootIndex) {
             int temp = array[rootIndex];
             array[rootIndex] = array[largest];
             array[largest] = temp;
 
-            // Рекурсивно преобразуем в двоичную кучу затронутое поддерево
+            // Р РµРєСѓСЂСЃРёРІРЅРѕ РїСЂРµРѕР±СЂР°Р·СѓРµРј РІ РґРІРѕРёС‡РЅСѓСЋ РєСѓС‡Сѓ Р·Р°С‚СЂРѕРЅСѓС‚РѕРµ РїРѕРґРґРµСЂРµРІРѕ
             heapify(array, heapSize, largest);
         }
     }
 
-    static void printArray(int arr[]) {
-        for (int i = 0; i < arr.length; ++i)
-            System.out.print(arr[i] + " ");
+    static void printArray(int[] arr) {
+        for (int j : arr) System.out.print(j + " ");
         System.out.println();
     }
 }
